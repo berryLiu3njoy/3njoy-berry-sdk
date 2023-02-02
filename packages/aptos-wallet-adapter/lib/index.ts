@@ -12,7 +12,6 @@ import {
   BitkeepWallet,
   HyperpayWallet,
 } from './wallets';
-console.log(1);
 
 export {
   MartianWallet,
