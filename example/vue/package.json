@@ -1,0 +1,25 @@
+{
+  "name": "example",
+  "version": "0.0.3",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc --noEmit && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@3njoylabs/aptos-wallet-adapter": "workspace:^1.0.3",
+    "@3njoylabs/aptos-wallet-adapter-ui": "workspace:^1.0.3",
+    "lodash-es": "^4.17.21",
+    "pinia": "2.0.0-rc.10",
+    "vue": "^3.2.37"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^3.1.0",
+    "aptos": "^1.3.11",
+    "typescript": "^4.6.4",
+    "vite": "^3.1.0",
+    "vue-tsc": "^0.40.4"
+  },
+  "gitHead": "2af1f46db20165df973ccfb0253892b0dc90b2e3"
+}

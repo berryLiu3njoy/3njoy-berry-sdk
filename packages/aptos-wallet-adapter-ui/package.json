@@ -1,0 +1,60 @@
+{
+  "name": "@3njoylabs/aptos-wallet-adapter-ui",
+  "version": "1.0.31",
+  "type": "module",
+  "description": "Aptos Wallet Adapter UI Components",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.js"
+    },
+    "./dist/style.css": {
+      "import": "./dist/style.css"
+    }
+  },
+  "keywords": [
+    "aptos",
+    "wallet",
+    "adapter",
+    "ui"
+  ],
+  "scripts": {
+    "dev": "vite build --watch",
+    "build": "vite build"
+  },
+  "author": "ice-enjoy <ice@3njoy.tech>",
+  "homepage": "",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git@github-enjoy:ENJOY-LAB/3njoy-aptos-sdk.git"
+  },
+  "peerDependencies": {
+    "@3njoylabs/aptos-wallet-adapter": "workspace:1.0.11",
+    "vue": "^3.2.36"
+  },
+  "dependencies": {
+    "@3njoylabs/aptos-wallet-adapter": "workspace:1.0.31",
+    "lodash-es": "^4.17.21",
+    "vue": "^3.2.36"
+  },
+  "devDependencies": {
+    "@types/lodash-es": "^4.17.6",
+    "@vitejs/plugin-vue": "^3.1.0",
+    "typescript": "^4.8.2",
+    "vite": "^3.1.0",
+    "vite-plugin-dts": "^1.4.1",
+    "vite-svg-loader": "^3.6.0",
+    "vue-tsc": "^0.40.12"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "gitHead": "2af1f46db20165df973ccfb0253892b0dc90b2e3"
+}
