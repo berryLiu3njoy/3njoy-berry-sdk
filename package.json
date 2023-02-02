@@ -7,7 +7,8 @@
     "devui": "pnpm --filter=@berryliu/aptos-wallet-adapter-ui run dev",
     "build": "pnpm --filter=@berryliu/* run build",
     "changeset": "changeset",
-    "version": "changeset version"
+    "version": "changeset version",
+    "publish": "changeset publish"
   },
   "devDependencies": {
     "@changesets/cli": "^2.26.0",

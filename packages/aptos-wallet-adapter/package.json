@@ -1,6 +1,6 @@
 {
   "name": "@berryliu/aptos-wallet-adapter",
-  "version": "1.0.31",
+  "version": "1.0.32",
   "type": "module",
   "description": "Adapter for Aptos' Wallet",
   "main": "dist/index.js",
