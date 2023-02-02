@@ -8,8 +8,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@3njoylabs/aptos-wallet-adapter": "workspace:^1.0.3",
-    "@3njoylabs/aptos-wallet-adapter-ui": "workspace:^1.0.3",
+    "@berryliu/aptos-wallet-adapter": "workspace:^1.0.3",
+    "@berryliu/aptos-wallet-adapter-ui": "workspace:^1.0.3",
     "lodash-es": "^4.17.21",
     "pinia": "2.0.0-rc.10",
     "vue": "^3.2.37"

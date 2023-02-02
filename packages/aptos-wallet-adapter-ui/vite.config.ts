@@ -19,7 +19,7 @@ export default defineConfig({
     minify: true,
 
     rollupOptions: {
-      external: ['vue', 'lodash-es', 'aptos', 'eventemitter3', '@3njoylabs/aptos-wallet-adapter'],
+      external: ['vue', 'lodash-es', 'aptos', 'eventemitter3', '@berryliu/aptos-wallet-adapter'],
       input: ['lib/index.ts'],
       output: [
         {

@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-  import { walletStore } from '@3njoylabs/aptos-wallet-adapter';
+  import { walletStore } from '@berryliu/aptos-wallet-adapter';
 </script>
 
 <style scoped></style>

@@ -19,7 +19,7 @@
 
 <script lang="ts" setup>
   import { onMounted, ref } from 'vue';
-  import { walletStore, useConnect } from '@3njoylabs/aptos-wallet-adapter';
+  import { walletStore, useConnect } from '@berryliu/aptos-wallet-adapter';
 
   import { SHORT_ADDRESS } from '../utils';
   import WalletModal from './WalletModal.vue';

@@ -28,7 +28,7 @@
 </template>
 
 <script lang="ts" setup>
-  import { walletStore, useConnect } from '@3njoylabs/aptos-wallet-adapter';
+  import { walletStore, useConnect } from '@berryliu/aptos-wallet-adapter';
 
   const { connectWallet } = useConnect();
   const emits = defineEmits(['update:visible', 'connected', 'error']);

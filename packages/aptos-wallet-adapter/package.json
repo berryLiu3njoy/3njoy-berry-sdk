@@ -1,5 +1,5 @@
 {
-  "name": "@3njoylabs/aptos-wallet-adapter",
+  "name": "@berryliu/aptos-wallet-adapter",
   "version": "1.0.31",
   "type": "module",
   "description": "Adapter for Aptos' Wallet",

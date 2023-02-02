@@ -1,6 +1,6 @@
 import { createApp, Plugin } from 'vue';
 import './style.css';
-import '@3njoylabs/aptos-wallet-adapter-ui/dist/style.css';
+import '@berryliu/aptos-wallet-adapter-ui/dist/style.css';
 
 import App from './App.vue';
 import {
@@ -9,9 +9,9 @@ import {
   FewchaWallet,
   PetraWallet,
   PontemWallet,
-} from '@3njoylabs/aptos-wallet-adapter';
+} from '@berryliu/aptos-wallet-adapter';
 import { createPinia } from 'pinia';
-import { AdapterWalletUI } from '@3njoylabs/aptos-wallet-adapter-ui';
+import { AdapterWalletUI } from '@berryliu/aptos-wallet-adapter-ui';
 
 const app = createApp(App);
 
