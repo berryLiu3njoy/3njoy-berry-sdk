@@ -1,6 +1,6 @@
 {
   "name": "@berryliu/aptos-wallet-adapter",
-  "version": "1.0.33",
+  "version": "1.0.34",
   "description": "Adapter for Aptos' Wallet",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -14,8 +14,8 @@
   ],
   "scripts": {
     "dev": "vite build --watch",
-    "build": "vite build",
-    "build1": "rm -rf dist; tsc -p tsconfig.json"
+    "build1": "vite build",
+    "build": "rm -rf dist; tsc -p tsconfig.json"
   },
   "author": "ice@enjoy.tech",
   "license": "MIT",
