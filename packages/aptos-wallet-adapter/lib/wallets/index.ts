@@ -7,4 +7,7 @@ export * from './RiseWallet';
 export * from './OKXWallet';
 export * from './BitkeepWallet';
 export * from './HyperpayWallet';
+export * from './BloctoWallet';
+export * from './CryptoWallet';
+export * from './MSafeWallet';
 

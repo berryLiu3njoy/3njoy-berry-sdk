@@ -48,12 +48,19 @@ export function useConnect() {
         currentWallet = walletStore.walletProvider.value;
       }
 
+      currentWallet.onAccountChange();
+      currentWallet.onNetworkChange();
+
+      currentWallet.on('accountChange', (address: string) => walletStore.address.value = address)
+      currentWallet.on('networkChange', (network: string) => walletStore.network.value = network)
+
       localStorage.setItem(walletStore.localstorageKey.value, p.name);
       walletStore.walletProvider.value = currentWallet;
       walletStore.address.value = p.account.address;
       walletStore.publicKey.value = p.account.publicKey;
       walletStore.name.value = p.name;
       walletStore.icon.value = p.icon;
+      walletStore.network.value = p.network?.name;
 
       return p.account;
     } catch (e) {

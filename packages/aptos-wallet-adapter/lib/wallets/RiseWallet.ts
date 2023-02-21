@@ -1,7 +1,7 @@
 import { RemoteABIBuilderConfig } from 'aptos';
 import { Types } from 'aptos/dist';
 
-import { AbstractWallet } from './AbstractWallet';
+import { AbstractWallet, NetworkInfo, WalletAdapterNetwork, Account } from './AbstractWallet';
 import { BASIC_TRANSACTION_OPTION, formatArgusForWallet } from './config';
 
 export class RiseWallet extends AbstractWallet {
@@ -19,6 +19,11 @@ export class RiseWallet extends AbstractWallet {
     publicKey: '',
   };
 
+  network: NetworkInfo = {
+    name: undefined,
+    chainId: '',
+  };
+
   constructor() {
     super();
   }
@@ -34,6 +39,12 @@ export class RiseWallet extends AbstractWallet {
           publicKey: result?.publicKey,
         };
       }
+      try {
+        const { name, chainId } = await this.provider?.network();
+        this.network.name = name as WalletAdapterNetwork;
+        this.network.chainId = chainId.toString();
+      } catch (error: any) {}
+
       this.emit('connected');
     } catch (error: any) {
       this.emit('error', error);
@@ -80,5 +91,36 @@ export class RiseWallet extends AbstractWallet {
       },
     );
   };
+
+  async onAccountChange(): Promise<void> {
+    try {
+      const handleChangeAccount = async (newAccount: Account) => {
+        if (newAccount?.address) {
+          this.account = {
+            address: newAccount.address || this.account?.address,
+            publicKey: newAccount.publicKey || this.account?.publicKey,
+          };
+          this.emit('accountChange', this.account.address);
+        }
+      };
+      await this.provider?.onAccountChange?.(handleChangeAccount);
+    } catch (error: any) {
+      this.emit('error', error);
+      throw error;
+    }
+  }
+
+  async onNetworkChange(): Promise<void> {
+    try {
+      const handleNetworkChange = async (newNetwork: NetworkInfo) => {
+        this.network = { ...newNetwork };
+        this.emit('networkChange', this.network.name);
+      };
+      await this.provider?.onNetworkChange(handleNetworkChange);
+    } catch (error: any) {
+      this.emit('error', error);
+      throw error;
+    }
+  }
 }
 

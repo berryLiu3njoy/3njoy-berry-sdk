@@ -1,7 +1,7 @@
 import { RemoteABIBuilderConfig } from 'aptos';
 import { Types } from 'aptos/dist';
 
-import { AbstractWallet } from './AbstractWallet';
+import { AbstractWallet, NetworkInfo, WalletAdapterNetwork } from './AbstractWallet';
 import { BASIC_TRANSACTION_OPTION, formatArgusForWallet } from './config';
 
 export class PontemWallet extends AbstractWallet {
@@ -20,6 +20,11 @@ export class PontemWallet extends AbstractWallet {
     publicKey: '',
   };
 
+  network: NetworkInfo = {
+    name: undefined,
+    chainId: '',
+  };
+
   constructor() {
     super();
   }
@@ -34,6 +39,15 @@ export class PontemWallet extends AbstractWallet {
           publicKey: result.publicKey,
         };
       }
+      try {
+        const { name, chainId } = await this.provider?.network();
+
+        // the name contains chain's name
+        this.network.name = name as WalletAdapterNetwork;
+        this.network.chainId = chainId.toString();
+        console.log(this.network)
+      } catch (error: any) {}
+
       this.emit('connected');
     } catch (error: any) {
       this.emit('error', error);
@@ -80,5 +94,44 @@ export class PontemWallet extends AbstractWallet {
       },
     );
   };
+
+  async onAccountChange(): Promise<void> {
+    try {
+      const handleChangeAccount = async (newAddress: string | undefined) => {
+        // disconnect wallet if newAccount is undefined
+        if (newAddress) {
+          const newPublicKey = await this.provider?.publicKey();
+          this.account = {
+            publicKey: newPublicKey,
+            address: newAddress,
+          };
+        } else {
+          const result = await this.provider?.connect();
+          this.account = {
+            address: result.address,
+            publicKey: result.publicKey,
+          };
+        }
+        this.emit('accountChange', this.account.address);
+      };
+      await this.provider?.onAccountChange(handleChangeAccount);
+    } catch (error: any) {
+      this.emit('error', error);
+      throw error;
+    }
+  }
+
+  async onNetworkChange(): Promise<void> {
+    try {
+      const handleNetworkChange = async (newNetwork: NetworkInfo) => {
+        this.network = { ...newNetwork };
+        this.emit('networkChange', newNetwork.name);
+      };
+      await this.provider?.onNetworkChange(handleNetworkChange);
+    } catch (error: any) {
+      this.emit('error', error);
+      throw error;
+    }
+  }
 }
 

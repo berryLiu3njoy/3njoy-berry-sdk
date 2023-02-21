@@ -1,7 +1,7 @@
 import { RemoteABIBuilderConfig } from 'aptos';
 import { Types } from 'aptos/dist';
 
-import { AbstractWallet } from './AbstractWallet';
+import { AbstractWallet, NetworkInfo } from './AbstractWallet';
 import { BASIC_TRANSACTION_OPTION } from './config';
 
 export class HyperpayWallet extends AbstractWallet {
@@ -17,6 +17,10 @@ export class HyperpayWallet extends AbstractWallet {
   account = {
     address: '',
     publicKey: '',
+  };
+
+  network: NetworkInfo = {
+    name: undefined
   };
 
   constructor() {
@@ -73,5 +77,8 @@ export class HyperpayWallet extends AbstractWallet {
     const result: any = await this.provider?.signAndSubmitTransaction(transaction);
     return result;
   };
+
+  async onAccountChange(): Promise<void> {};
+  async onNetworkChange(): Promise<void> {};
 }
 

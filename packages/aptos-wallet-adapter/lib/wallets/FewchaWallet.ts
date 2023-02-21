@@ -1,8 +1,10 @@
+import Web3 from '@fewcha/web3';
 import { RemoteABIBuilderConfig } from 'aptos';
 import { Types } from 'aptos/dist';
+import { AbstractWallet, NetworkInfo } from './AbstractWallet';
 
-import { AbstractWallet } from './AbstractWallet';
 import { BASIC_TRANSACTION_OPTION } from './config';
+const web3 = new Web3();
 
 export class FewchaWallet extends AbstractWallet {
   icon = 'https://static.souffl3.com/assets/wallet/fewcha.png';
@@ -10,24 +12,31 @@ export class FewchaWallet extends AbstractWallet {
   name = 'Fewcha Wallet';
   connecting = false;
 
-  provider = window.fewcha || null;
+  provider: any = web3.action || window.fewcha || null;
 
-  isInstalled = () => !!window.fewcha;
+  isInstalled = () => !!this.provider;
 
   account = {
     address: '',
     publicKey: '',
   };
 
+  network: NetworkInfo = {
+    name: undefined
+  };
+
   constructor() {
     super();
+    window.addEventListener('fewcha#initialized', () => {
+      this.provider = web3.action;
+    });
   }
 
   connect = async () => {
     this.connecting = true;
     try {
-      const result: any = await this.provider?.connect();
-      console.log(result);
+      const provider = this.provider || window.fewcha;
+      const result: any = await provider.connect();
       if (result.status === 200) {
         this.account = result.data;
       }
@@ -43,7 +52,8 @@ export class FewchaWallet extends AbstractWallet {
 
   disconnect = async () => {
     try {
-      await this.provider.disconnect();
+      const provider = this.provider || window.fewcha;
+      await provider.disconnect();
       this.account = { address: '', publicKey: '' };
       this.emit('disconnect');
     } catch (error: any) {
@@ -54,7 +64,8 @@ export class FewchaWallet extends AbstractWallet {
 
   signMessage = async (metaData: any) => {
     try {
-      const result: any = await this.provider.signMessage(metaData);
+      const provider = this.provider || window.fewcha;
+      const result: any = await provider.signMessage(metaData);
       this.emit('signMessage');
       return result.data;
     } catch (error: any) {
@@ -67,13 +78,24 @@ export class FewchaWallet extends AbstractWallet {
     payload: Types.TransactionPayload_ScriptPayload,
     options: RemoteABIBuilderConfig,
   ) => {
-    const txnRequest = await this.provider.generateTransaction(payload, {
+    const provider = this.provider || window.fewcha;
+    const transaction = await provider.generateTransaction(payload, {
       ...BASIC_TRANSACTION_OPTION(),
       ...options,
     });
-    const signedTx = await this.provider.signTransaction(txnRequest.data);
-    const result: any = await this.provider.submitTransaction(signedTx.data);
-    return result;
+    const result: any = await provider.signAndSubmitTransaction(transaction.data);
+
+    if (result.status !== 200) {
+      return Promise.reject({
+        ...result,
+        message: result.status == 401 ? 'User reject the request' : result.message,
+      });
+    } else {
+      return result;
+    }
   };
+
+  async onAccountChange(): Promise<void> {};
+  async onNetworkChange(): Promise<void> {};
 }
 

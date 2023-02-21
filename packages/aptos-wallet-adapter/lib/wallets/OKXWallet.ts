@@ -1,7 +1,7 @@
 import { RemoteABIBuilderConfig } from 'aptos';
 import { Types } from 'aptos/dist';
 
-import { AbstractWallet } from './AbstractWallet';
+import { AbstractWallet, NetworkInfo } from './AbstractWallet';
 import { BASIC_TRANSACTION_OPTION, formatArgusForWallet } from './config';
 
 export class OKXWallet extends AbstractWallet {
@@ -17,6 +17,10 @@ export class OKXWallet extends AbstractWallet {
   account = {
     address: '',
     publicKey: '',
+  };
+
+  network: NetworkInfo = {
+    name: undefined
   };
 
   constructor() {
@@ -77,5 +81,8 @@ export class OKXWallet extends AbstractWallet {
       },
     );
   };
+
+  async onAccountChange(): Promise<void> {};
+  async onNetworkChange(): Promise<void> {};
 }
 

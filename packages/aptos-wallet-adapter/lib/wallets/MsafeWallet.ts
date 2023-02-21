@@ -1,30 +1,48 @@
 import { RemoteABIBuilderConfig } from 'aptos';
 import { Types } from 'aptos/dist';
-import { Account, MsafeWallet as wallet } from 'msafe-wallet';
-
-import { AbstractWallet } from './AbstractWallet';
+import { MSafeWallet as wallet } from 'msafe-wallet';
+import { AbstractWallet, NetworkInfo } from './AbstractWallet';
 import { BASIC_TRANSACTION_OPTION, formatArgusForWallet } from './config';
 
-export class MsafeWallet extends AbstractWallet {
+const ORIGIN = 'https://app.m-safe.io';
+
+export class MSafeWallet extends AbstractWallet {
   icon = 'https://static.souffl3.com/assets/wallet/msafe.png';
   url = wallet.getOrigin();
-  name = 'Msafe Wallet';
+  name = 'MSafe Wallet';
   connecting = false;
 
-  provider: any = wallet || null;
+  provider: any = wallet || {};
 
-  isInstalled = () => !!wallet;
+  isInstalled = () => true;
 
   account = {
     address: '',
     publicKey: '',
   };
 
+  network: NetworkInfo = {
+    name: undefined,
+  };
+
   constructor() {
     super();
+
+    if (wallet.inMsafeWallet()) {
+      wallet.new(wallet.getOrigin(ORIGIN)).then((res: any) => {
+        this.provider = res;
+      });
+    }
   }
 
   connect = async () => {
+    if (!wallet.inMsafeWallet()) {
+      window.open(wallet.getAppUrl(ORIGIN), '_blank');
+      return;
+    }
+
+    this.provider = await wallet.new();
+
     this.connecting = true;
     try {
       const result: any = await this.provider?.account();
@@ -79,5 +97,8 @@ export class MsafeWallet extends AbstractWallet {
     );
     return result;
   };
+
+  async onAccountChange(): Promise<void> {}
+  async onNetworkChange(): Promise<void> {}
 }
 

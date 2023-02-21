@@ -14,13 +14,15 @@ export const walletStore = createGlobalState(() => {
   const walletModalOpen = ref(false);
   const address = ref('');
   const publicKey = ref('');
+  const network = ref('');
   const localstorageKey = ref(DEFAULT_LS_KEY);
-  const walletList = ref<AbstractWallet[]>([]);
+  const walletList = ref<AbstractWallet[] | any>([]);
 
   const clear = () => {
     name.value = '';
     icon.value = '';
     address.value = '';
+    network.value = '';
     walletProvider.value = {};
     isConnected.value = false;
     connecting.value = false;
@@ -33,6 +35,7 @@ export const walletStore = createGlobalState(() => {
     publicKey,
     name,
     icon,
+    network,
     walletList,
     localstorageKey,
     walletProvider,

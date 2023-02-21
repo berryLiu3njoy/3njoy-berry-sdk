@@ -1,18 +1,20 @@
 import { RemoteABIBuilderConfig } from 'aptos';
 import { Types } from 'aptos/dist';
-
 import { AbstractWallet, NetworkInfo } from './AbstractWallet';
+
 import { BASIC_TRANSACTION_OPTION } from './config';
 
-export class OneKeyWallet extends AbstractWallet {
-  icon = 'https://static.souffl3.com/assets/wallet/onekey.png';
-  url = 'https://chrome.google.com/webstore/detail/jnmbobjmhlngoefaiojfljckilhhlhcj';
-  name = 'OneKey Wallet';
+export class CryptoWallet extends AbstractWallet {
+  icon = 'https://static.souffl3.com/assets/wallet/crypto.jpg';
+  url = 'https://crypto.com/defi-wallet#wallet_extension';
+  name = 'Crypto Wallet';
   connecting = false;
 
-  provider = window.$onekey?.aptos || null;
+  // @ts-ignore
+  provider: any = window.deficonnect?.aptos || null;
 
-  isInstalled = () => !!window.$onekey?.aptos;
+  // @ts-ignore
+  isInstalled = () => !!window.deficonnect?.aptos;
 
   account = {
     address: '',
@@ -30,15 +32,14 @@ export class OneKeyWallet extends AbstractWallet {
   connect = async () => {
     this.connecting = true;
     try {
-      const result: any = await this.provider.connect();
-      if (result.status === 200) {
-        this.account = {
-          address: result?.address,
-          publicKey: result?.address,
-        };
-      }
+      const { publicKey, address }: any = await this.provider?.connect();
+      this.account = {
+        publicKey,
+        address,
+      };
       this.emit('connected');
     } catch (error: any) {
+      console.log(error);
       this.emit('error', error);
       throw error;
     } finally {
@@ -50,9 +51,9 @@ export class OneKeyWallet extends AbstractWallet {
     try {
       await this.provider.disconnect();
       this.account = { address: '', publicKey: '' };
-      this.emit('disconnect');
+      // this.emit('disconnect');
     } catch (error: any) {
-      this.emit('error', error);
+      // this.emit('error', error);
       throw error;
     }
   };
@@ -60,10 +61,10 @@ export class OneKeyWallet extends AbstractWallet {
   signMessage = async (metaData: any) => {
     try {
       const result: any = await this.provider.signMessage(metaData);
-      this.emit('signMessage');
-      return result;
+      // this.emit('signMessage');
+      return result.data;
     } catch (error: any) {
-      this.emit('error', error);
+      // this.emit('error', error);
       throw error;
     }
   };
@@ -72,11 +73,10 @@ export class OneKeyWallet extends AbstractWallet {
     payload: Types.TransactionPayload_ScriptPayload,
     options: RemoteABIBuilderConfig,
   ) => {
-    const transaction = await this.provider?.generateTransaction(this.account.address, payload, {
+    const result: any = await this.provider.signAndSubmitTransaction(payload, {
       ...BASIC_TRANSACTION_OPTION(),
       ...options,
     });
-    const result: any = await this.provider?.signAndSubmitTransaction(transaction);
     return result;
   };
 
