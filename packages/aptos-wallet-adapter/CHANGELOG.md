@@ -1,5 +1,11 @@
 # @berryliu/aptos-wallet-adapter
 
+## 1.0.35
+
+### Patch Changes
+
+- update build
+
 ## 1.0.34
 
 ### Patch Changes

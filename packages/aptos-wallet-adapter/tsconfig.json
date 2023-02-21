@@ -2,15 +2,16 @@
   "compilerOptions": {
     "rootDir": "./lib",
     "outDir": "./dist",
-    "target": "ESNext",
+    "target": "ES2016",
     "module": "CommonJS",
     "moduleResolution": "node",
     "strict": true,
     "jsx": "preserve",
     "declaration": true,
+    "esModuleInterop": true,
     "isolatedModules": true,
     "resolveJsonModule": true,
-    "lib": ["ESNext", "ES2015", "DOM"],
+    "lib": ["ESNext", "DOM"],
     "skipLibCheck": true
   },
   "include": ["lib"]

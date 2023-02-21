@@ -1,6 +1,6 @@
 {
   "name": "@berryliu/aptos-wallet-adapter",
-  "version": "1.0.34",
+  "version": "1.0.35",
   "description": "Adapter for Aptos' Wallet",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",

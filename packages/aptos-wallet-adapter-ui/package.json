@@ -1,6 +1,6 @@
 {
   "name": "@berryliu/aptos-wallet-adapter-ui",
-  "version": "1.0.34",
+  "version": "1.0.35",
   "type": "module",
   "description": "Aptos Wallet Adapter UI Components",
   "main": "./dist/index.js",
@@ -36,11 +36,11 @@
     "url": "git@github-enjoy:ENJOY-LAB/3njoy-aptos-sdk.git"
   },
   "peerDependencies": {
-    "@berryliu/aptos-wallet-adapter": "workspace:1.0.34",
+    "@berryliu/aptos-wallet-adapter": "workspace:1.0.35",
     "vue": "^3.2.36"
   },
   "dependencies": {
-    "@berryliu/aptos-wallet-adapter": "workspace:1.0.34",
+    "@berryliu/aptos-wallet-adapter": "workspace:1.0.35",
     "lodash-es": "^4.17.21",
     "vue": "^3.2.36"
   },
